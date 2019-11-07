@@ -19,7 +19,6 @@ public class Localizacion {
 	private Integer provincia_id;
 	private String provincia_codigo_inec;
 	private String provincia_nombre;
-
 	private String x_origen;
 	private String y_origen;
 	private Integer srid_origen;

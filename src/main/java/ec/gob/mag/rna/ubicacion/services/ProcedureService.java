@@ -25,7 +25,6 @@ import ec.gob.mag.rna.ubicacion.dto.Localizacion;
  * @version final
  */
 
-
 @Service("procedureService")
 public class ProcedureService {
 
@@ -36,14 +35,12 @@ public class ProcedureService {
 		this.entityManager = entityManager;
 	}
 
-	
-
 	/**
-	 * Valida que las coordenadas ingresadas son correctas. 
+	 * Valida que las coordenadas ingresadas son correctas.
 	 *
 	 * @param Integer ubiId
-	 * @param Double x
-	 * @param Double y
+	 * @param Double  x
+	 * @param Double  y
 	 * @return Boolean, true si son correctas, caso contario, false.
 	 */
 	public Boolean validarCoordenada(Integer ubiId, Double x, Double y) {
@@ -61,15 +58,12 @@ public class ProcedureService {
 		return res;
 	}
 
-	
-	
-
 	/**
-	 * Valida el punto geográfico  
+	 * Valida el punto geográfico
 	 *
 	 * @param Integer ubiId
-	 * @param Double longitud
-	 * @param Double latitud
+	 * @param Double  longitud
+	 * @param Double  latitud
 	 * @return List<Localizacion>.
 	 */
 	@Transactional

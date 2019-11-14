@@ -39,8 +39,8 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString(of = "id")
-@EqualsAndHashCode(of = "id")
+@ToString(of = "ubiId")
+@EqualsAndHashCode(of = "ubiId")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

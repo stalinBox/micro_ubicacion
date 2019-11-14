@@ -66,6 +66,7 @@ public class ProcedureService {
 	 * @param Double  latitud
 	 * @return List<Localizacion>.
 	 */
+	@SuppressWarnings("unchecked")
 	@Transactional
 	public List<Localizacion> findPlace(Integer ubiId, Double longitud, Double latitud) {
 		Session session = entityManager.unwrap(Session.class);

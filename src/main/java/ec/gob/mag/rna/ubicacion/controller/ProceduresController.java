@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -40,7 +41,7 @@ public class ProceduresController implements ErrorController {
 	@ApiOperation(value = "Busca y valida una ubicacion y coordenada ", response = ResponseValidationProcedure.class)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseValidationProcedure findValidateUbication(@PathVariable Integer ubiId, @PathVariable Double xLong,
-			@PathVariable Double yLat) {
+			@PathVariable Double yLat, @RequestHeader(name = "Authorization") String token) {
 		List<Localizacion> datosValidacion = null;
 		Boolean valido = true;
 		valido = procedureService.validarCoordenada(ubiId, xLong, yLat);

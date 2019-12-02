@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -37,7 +38,7 @@ public class MicroUbicacionController implements ErrorController {
 	@RequestMapping(value = "/ubicacion/findByUbiId/{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Obtiene los datos de la ubicacion y de todos sus ubicaciones padre por id", response = Ubicacion.class)
 	@ResponseStatus(HttpStatus.OK)
-	public Ubicacion getUbicacion(@PathVariable Long id) {
+	public Ubicacion getUbicacion(@PathVariable Long id, @RequestHeader(name = "Authorization") String token) {
 		Ubicacion ubicaciones = ubicacionService.findByUbiId(id);
 		return ubicaciones;
 	}
@@ -45,7 +46,8 @@ public class MicroUbicacionController implements ErrorController {
 	@RequestMapping(value = "/ubicacion/findOnlyFirstLevelByUbiId/{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Obtiene únicamente los datos de la ubicacion por Id", response = Ubicacion.class)
 	@ResponseStatus(HttpStatus.OK)
-	public Ubicacion getUbicacionOnlyFirstLevel(@PathVariable Long id) {
+	public Ubicacion getUbicacionOnlyFirstLevel(@PathVariable Long id,
+			@RequestHeader(name = "Authorization") String token) {
 		Ubicacion ubicaciones = ubicacionService.findByUbiId(id);
 		ubicaciones.setUbicacion(null);
 		return ubicaciones;
@@ -54,7 +56,8 @@ public class MicroUbicacionController implements ErrorController {
 	@RequestMapping(value = "/ubicacion/findChildrenByUbiId/{ubiId}", method = RequestMethod.GET)
 	@ApiOperation(value = "Obtiene las ubicaciones hijas", response = Ubicacion.class)
 	@ResponseStatus(HttpStatus.OK)
-	public List<Ubicacion> findChildrenByUbiId(@PathVariable Long ubiId) {
+	public List<Ubicacion> findChildrenByUbiId(@PathVariable Long ubiId,
+			@RequestHeader(name = "Authorization") String token) {
 		List<Ubicacion> ubicaciones = ubicacionService.findChildrenByUbiId(ubiId);
 		return ubicaciones;
 	}

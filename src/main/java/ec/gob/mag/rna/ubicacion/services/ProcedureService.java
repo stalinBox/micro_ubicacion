@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureQuery;
 import javax.transaction.Transactional;
 
 import org.hibernate.Session;
@@ -33,29 +32,6 @@ public class ProcedureService {
 	@Autowired
 	public ProcedureService(final EntityManager entityManager) {
 		this.entityManager = entityManager;
-	}
-
-	/**
-	 * Valida que las coordenadas ingresadas son correctas.
-	 *
-	 * @param Integer ubiId
-	 * @param Double  x
-	 * @param Double  y
-	 * @return Boolean, true si son correctas, caso contario, false.
-	 */
-	public Boolean validarCoordenada(Integer ubiId, Double x, Double y) {
-		StoredProcedureQuery storedProcedureQuery = entityManager.createStoredProcedureQuery("public.validar_lat_long");
-		// Registrar los parámetros dfindPlacee entrada y salida
-		storedProcedureQuery.registerStoredProcedureParameter("ubiId", Integer.class, ParameterMode.IN);
-		storedProcedureQuery.registerStoredProcedureParameter("x", Double.class, ParameterMode.IN);
-		storedProcedureQuery.registerStoredProcedureParameter("y", Double.class, ParameterMode.IN);
-		storedProcedureQuery.registerStoredProcedureParameter("res", Boolean.class, ParameterMode.OUT);
-		storedProcedureQuery.setParameter("ubiId", ubiId);
-		storedProcedureQuery.setParameter("x", x);
-		storedProcedureQuery.setParameter("y", y);
-		storedProcedureQuery.execute();
-		final Boolean res = (Boolean) storedProcedureQuery.getOutputParameterValue("res");
-		return res;
 	}
 
 	/**

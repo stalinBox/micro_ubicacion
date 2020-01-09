@@ -11,8 +11,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class ResponseValidationProcedure {
-	@ApiModelProperty(notes = "Nombre del procedimiento", position = 1)
-	private String procedure;
 	@ApiModelProperty(notes = "Resultado de la validación", position = 2)
 	private Boolean validation;
 	@ApiModelProperty(notes = "Objeto con los datos validados", position = 3)

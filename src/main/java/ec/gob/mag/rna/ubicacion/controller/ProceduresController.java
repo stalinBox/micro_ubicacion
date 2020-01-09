@@ -43,12 +43,14 @@ public class ProceduresController implements ErrorController {
 	public ResponseValidationProcedure findValidateUbication(@PathVariable Integer ubiId, @PathVariable Double xLong,
 			@PathVariable Double yLat, @RequestHeader(name = "Authorization") String token) {
 		List<Localizacion> datosValidacion = null;
-		Boolean valido = null;
-		datosValidacion = procedureService.findPlace(ubiId, xLong, yLat);
-		if (datosValidacion.equals(null)) {
+		Boolean valido = true;
+		datosValidacion = this.procedureService.findPlace(ubiId, xLong, yLat);
+		if (datosValidacion.size() == 0) {
 			valido = false;
+			return new ResponseValidationProcedure(valido, null);
+		} else {
+			return new ResponseValidationProcedure(valido, datosValidacion);
 		}
-		return new ResponseValidationProcedure("validar_coordenadas", valido, datosValidacion);
 	}
 
 	@Override

@@ -65,9 +65,8 @@ public class MicroUbicacionController implements ErrorController {
 	}
 
 	/**
-	 * RENAGRO
+	 * -------------------- RENAGRO
 	 */
-
 	@RequestMapping(value = "/ubicacion/findByRegiones/{catIdUbi}", method = RequestMethod.GET)
 	@ApiOperation(value = "Obtiene todas las regiones, se tiene que enviar el parametro cat_id_ubicacion", response = Ubicacion.class)
 	@ResponseStatus(HttpStatus.OK)
@@ -83,6 +82,7 @@ public class MicroUbicacionController implements ErrorController {
 	public List<ResponseProvincias> findByProvinciasByRegiones(@PathVariable Long ubiIdRegion,
 			@PathVariable Long ubiIdPadre, @RequestHeader(name = "Authorization") String token) throws IOException {
 		List<ResponseProvincias> ubicaciones = ubicacionService.findByProvinciasByRegiones(ubiIdRegion, ubiIdPadre);
+
 		return ubicaciones;
 	}
 

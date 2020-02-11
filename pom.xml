@@ -113,7 +113,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>micro_ubicacion</finalName>
+		<finalName>micro_ubicacion-0.0.1</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

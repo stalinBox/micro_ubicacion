@@ -392,6 +392,15 @@ public class Ubicacion implements Serializable {
 	@JsonProperty("ubiYMin18n")
 	private Float ubiYMin18n;
 
+	/**
+	 * AGREGADO PARA CONSULTAR LAS REGIONES EN RENAGRO
+	 */
+	@ApiModelProperty(value = " ***", position = 16)
+	@JsonInclude(Include.NON_NULL)
+	@Column(name = "ubi_id_region")
+	@JsonProperty("ubiIdRegion")
+	private Long ubiIdRegion;
+
 	@PrePersist
 	public void prePersist() {
 		// this.timeStamp = Util.dateNow();

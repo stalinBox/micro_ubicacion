@@ -1,5 +1,6 @@
 package ec.gob.mag.rna.ubicacion.controller;
 
+import java.io.IOException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.gob.mag.rna.ubicacion.domain.Ubicacion;
+import ec.gob.mag.rna.ubicacion.dto.ResponseProvincias;
 import ec.gob.mag.rna.ubicacion.services.UbicacionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -59,6 +61,28 @@ public class MicroUbicacionController implements ErrorController {
 	public List<Ubicacion> findChildrenByUbiId(@PathVariable Long ubiId,
 			@RequestHeader(name = "Authorization") String token) {
 		List<Ubicacion> ubicaciones = ubicacionService.findChildrenByUbiId(ubiId);
+		return ubicaciones;
+	}
+
+	/**
+	 * -------------------- RENAGRO
+	 */
+	@RequestMapping(value = "/ubicacion/findByRegiones/{catIdUbi}", method = RequestMethod.GET)
+	@ApiOperation(value = "Obtiene todas las regiones, se tiene que enviar el parametro cat_id_ubicacion", response = Ubicacion.class)
+	@ResponseStatus(HttpStatus.OK)
+	public List<Ubicacion> findByRegiones(@PathVariable Long catIdUbi,
+			@RequestHeader(name = "Authorization") String token) {
+		List<Ubicacion> ubicaciones = ubicacionService.findByRegiones(catIdUbi);
+		return ubicaciones;
+	}
+
+	@RequestMapping(value = "/ubicacion/findByProvinciasByRegiones/{ubiIdRegion}/{ubiIdPadre}", method = RequestMethod.GET)
+	@ApiOperation(value = "Obtiene las provincias segun la región", response = Ubicacion.class)
+	@ResponseStatus(HttpStatus.OK)
+	public List<ResponseProvincias> findByProvinciasByRegiones(@PathVariable Long ubiIdRegion,
+			@PathVariable Long ubiIdPadre, @RequestHeader(name = "Authorization") String token) throws IOException {
+		List<ResponseProvincias> ubicaciones = ubicacionService.findByProvinciasByRegiones(ubiIdRegion, ubiIdPadre);
+
 		return ubicaciones;
 	}
 

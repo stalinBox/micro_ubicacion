@@ -28,11 +28,5 @@ public class MicroUbicacion extends SpringBootServletInitializer {
 
 	private static Class<MicroUbicacion> applicationClass = MicroUbicacion.class;
 
-	@Bean
-	public ResourceBundleMessageSource messageSource() {
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-		messageSource.setBasename("messages");
-		return messageSource;
-	}
-
+//ALGO PARA CAMBIAR
 }

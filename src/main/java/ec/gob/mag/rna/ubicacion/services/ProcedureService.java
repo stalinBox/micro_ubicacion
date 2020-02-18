@@ -46,7 +46,7 @@ public class ProcedureService {
 	@Transactional
 	public List<Localizacion> findPlace(Integer ubiId, Double longitud, Double latitud) {
 		Session session = entityManager.unwrap(Session.class);
-		ProcedureCall call = session.createStoredProcedureCall("public.sp_valida_punto_geografico");
+		ProcedureCall call = session.createStoredProcedureCall("sc_geografico.sp_valida_punto_geografico");
 		call.registerParameter(1, void.class, ParameterMode.REF_CURSOR);
 		call.registerParameter(2, Integer.class, ParameterMode.IN).bindValue(ubiId);
 		call.registerParameter(3, Double.class, ParameterMode.IN).bindValue(longitud);

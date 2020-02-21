@@ -48,7 +48,7 @@ import lombok.ToString;
 //========== JPA ======================
 
 @Entity
-@Table(name = "ubicacion", schema = "sc_geografico")
+@Table(name = "ubicacion", schema = "public")
 //@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="ord", scope = Agrupacion.class)
 public class Ubicacion implements Serializable {
 

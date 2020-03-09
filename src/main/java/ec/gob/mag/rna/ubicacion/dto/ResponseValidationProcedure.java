@@ -15,4 +15,6 @@ public class ResponseValidationProcedure {
 	private Boolean validation;
 	@ApiModelProperty(notes = "Objeto con los datos validados", position = 3)
 	private List<Localizacion> datosValidados;
+	@ApiModelProperty(notes = "Objeto con los datos validados", position = 3)
+	private List<LocalizacionCanton> datosValidadosCanton;
 }

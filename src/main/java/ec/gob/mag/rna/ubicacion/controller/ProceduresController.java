@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.gob.mag.rna.ubicacion.dto.Localizacion;
+import ec.gob.mag.rna.ubicacion.dto.LocalizacionCanton;
 import ec.gob.mag.rna.ubicacion.dto.ResponseValidationProcedure;
 import ec.gob.mag.rna.ubicacion.services.ProcedureService;
 import io.swagger.annotations.Api;
@@ -38,18 +39,41 @@ public class ProceduresController implements ErrorController {
 	private ProcedureService procedureService;
 
 	@RequestMapping(value = "/coordenada/findValidateUbication/{ubiId}/{xLong}/{yLat}", method = RequestMethod.GET)
-	@ApiOperation(value = "Busca y valida una ubicacion y coordenada ", response = ResponseValidationProcedure.class)
+	@ApiOperation(value = "Busca y valida una ubicacion y coordenada para parroquias", response = ResponseValidationProcedure.class)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseValidationProcedure findValidateUbication(@PathVariable Integer ubiId, @PathVariable Double xLong,
-			@PathVariable Double yLat, @RequestHeader(name = "Authorization") String token) {
+	public ResponseValidationProcedure findValidateUbicationParroquia(@PathVariable Integer ubiId,
+			@PathVariable Double xLong, @PathVariable Double yLat,
+			@RequestHeader(name = "Authorization") String token) {
 		List<Localizacion> datosValidacion = null;
 		Boolean valido = true;
-		datosValidacion = this.procedureService.findPlace(ubiId, xLong, yLat);
+		datosValidacion = this.procedureService.findPlaceParroquia(ubiId, xLong, yLat);
 		if (datosValidacion.size() == 0) {
 			valido = false;
-			return new ResponseValidationProcedure(valido, null);
+			return new ResponseValidationProcedure(valido, null, null);
 		} else {
-			return new ResponseValidationProcedure(valido, datosValidacion);
+			return new ResponseValidationProcedure(valido, datosValidacion, null);
+		}
+	}
+
+	@RequestMapping(value = "/coordenada/findValidateUbicationCaton/{ubiId}/{xLong}/{yLat}", method = RequestMethod.GET)
+	@ApiOperation(value = "Busca y valida una ubicacion y coordenada para Cantones", response = ResponseValidationProcedure.class)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseValidationProcedure findValidateUbicationCanton(@PathVariable String ubiId,
+			@PathVariable String xLong, @PathVariable String yLat,
+			@RequestHeader(name = "Authorization") String token) {
+		List<LocalizacionCanton> datosValidacion = null;
+
+		System.out.println("VARIALBES: ID " + Integer.parseInt(ubiId) + " xLONG: " + Double.parseDouble(xLong)
+				+ " yLAT: " + Double.parseDouble(yLat));
+
+		Boolean valido = true;
+		datosValidacion = this.procedureService.findPlaceCanton(Integer.parseInt(ubiId), Double.parseDouble(xLong),
+				Double.parseDouble(yLat));
+		if (datosValidacion.size() == 0) {
+			valido = false;
+			return new ResponseValidationProcedure(valido, null, null);
+		} else {
+			return new ResponseValidationProcedure(valido, null, datosValidacion);
 		}
 	}
 

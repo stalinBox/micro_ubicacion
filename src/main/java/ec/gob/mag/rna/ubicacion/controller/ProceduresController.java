@@ -62,10 +62,6 @@ public class ProceduresController implements ErrorController {
 			@PathVariable String xLong, @PathVariable String yLat,
 			@RequestHeader(name = "Authorization") String token) {
 		List<LocalizacionCanton> datosValidacion = null;
-
-		System.out.println("VARIALBES: ID " + Integer.parseInt(ubiId) + " xLONG: " + Double.parseDouble(xLong)
-				+ " yLAT: " + Double.parseDouble(yLat));
-
 		Boolean valido = true;
 		datosValidacion = this.procedureService.findPlaceCanton(Integer.parseInt(ubiId), Double.parseDouble(xLong),
 				Double.parseDouble(yLat));

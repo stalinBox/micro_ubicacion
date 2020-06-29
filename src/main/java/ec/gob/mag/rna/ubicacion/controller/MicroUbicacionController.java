@@ -2,10 +2,13 @@ package ec.gob.mag.rna.ubicacion.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.gob.mag.rna.ubicacion.domain.Ubicacion;
+import ec.gob.mag.rna.ubicacion.domain.ViewUbicacion;
 import ec.gob.mag.rna.ubicacion.dto.ResponseProvincias;
 import ec.gob.mag.rna.ubicacion.services.UbicacionService;
+import ec.gob.mag.rna.ubicacion.services.ViewUbicacionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
@@ -36,6 +41,10 @@ public class MicroUbicacionController implements ErrorController {
 	@Autowired
 	@Qualifier("ubicacionService")
 	private UbicacionService ubicacionService;
+
+	@Autowired
+	@Qualifier("viewUbicacionService")
+	private ViewUbicacionService viewUbicacionService;
 
 	@RequestMapping(value = "/ubicacion/findByUbiId/{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Obtiene los datos de la ubicacion y de todos sus ubicaciones padre por id", response = Ubicacion.class)
@@ -64,9 +73,6 @@ public class MicroUbicacionController implements ErrorController {
 		return ubicaciones;
 	}
 
-	/**
-	 * -------------------- RENAGRO
-	 */
 	@RequestMapping(value = "/ubicacion/findByRegiones/{catIdUbi}", method = RequestMethod.GET)
 	@ApiOperation(value = "Obtiene todas las regiones, se tiene que enviar el parametro cat_id_ubicacion", response = Ubicacion.class)
 	@ResponseStatus(HttpStatus.OK)
@@ -84,6 +90,22 @@ public class MicroUbicacionController implements ErrorController {
 		List<ResponseProvincias> ubicaciones = ubicacionService.findByProvinciasByRegiones(ubiIdRegion, ubiIdPadre);
 
 		return ubicaciones;
+	}
+
+	@RequestMapping(value = "/ubicacion/findAllUbicacionesEcuador", method = RequestMethod.GET)
+	@ApiOperation(value = "Obtiene todas las ubicaciones de Ecuador por Provincias-Cantones-Parroquias", response = ViewUbicacion.class)
+	public List<ViewUbicacion> findByAllUbicacionesEcuador(@RequestHeader(name = "Authorization") String token) {
+		List<ViewUbicacion> ubicaciones = null;
+		ubicaciones = viewUbicacionService.findAll();
+		return ubicaciones;
+	}
+
+	@RequestMapping(value = "/ubicacion/findAllUbicacionesEcuador/{idParroquia}", method = RequestMethod.GET)
+	@ApiOperation(value = "Obtiene todas las ubicaciones de Ecuador por Provincias-Cantones-Parroquias", response = ViewUbicacion.class)
+	public ResponseEntity<?> findByParroquiaUbiId(@PathVariable Long idParroquia,
+			@RequestHeader(name = "Authorization") String token) {
+		Optional<ViewUbicacion> ubicaciones = viewUbicacionService.findByParroquiaUbiId(idParroquia);
+		return ResponseEntity.ok(ubicaciones);
 	}
 
 	@Override

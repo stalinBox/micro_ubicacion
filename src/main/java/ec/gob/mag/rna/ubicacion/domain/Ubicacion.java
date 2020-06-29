@@ -49,7 +49,6 @@ import lombok.ToString;
 
 @Entity
 @Table(name = "ubicacion", schema = "public")
-//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class,property="ord", scope = Agrupacion.class)
 public class Ubicacion implements Serializable {
 
 	/**

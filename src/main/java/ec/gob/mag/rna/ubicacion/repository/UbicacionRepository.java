@@ -22,9 +22,6 @@ public interface UbicacionRepository extends CrudRepository<Ubicacion, Long> {
 
 	void deleteByUbiId(Integer ubiId);
 
-	/**
-	 * ----------> RENAGRO
-	 */
 	List<Ubicacion> findBycatIdUbicacion(Long catIdUbi);
 
 	@Query("SELECT ub FROM Ubicacion ub WHERE ub.ubiEstado=11 and ub.ubiEliminado=false and ub.ubiIdRegion=?1 and ub.ubicacion.ubiId=?2")

@@ -1,7 +1,6 @@
 package ec.gob.mag.rna.ubicacion.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,5 +14,4 @@ public interface ViewUbicacionRepository extends CrudRepository<ViewUbicacion, L
 	@Query("FROM ViewUbicacion")
 	List<ViewUbicacion> findAll();
 
-	Optional<ViewUbicacion> findByParroquiaUbiId(Long idParroquia);
 }

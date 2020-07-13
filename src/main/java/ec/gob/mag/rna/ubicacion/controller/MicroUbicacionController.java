@@ -2,13 +2,11 @@ package ec.gob.mag.rna.ubicacion.controller;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -98,14 +96,6 @@ public class MicroUbicacionController implements ErrorController {
 		List<ViewUbicacion> ubicaciones = null;
 		ubicaciones = viewUbicacionService.findAll();
 		return ubicaciones;
-	}
-
-	@RequestMapping(value = "/ubicacion/findAllUbicacionesEcuador/{idParroquia}", method = RequestMethod.GET)
-	@ApiOperation(value = "Obtiene todas las ubicaciones de Ecuador por Provincias-Cantones-Parroquias", response = ViewUbicacion.class)
-	public ResponseEntity<?> findByParroquiaUbiId(@PathVariable Long idParroquia,
-			@RequestHeader(name = "Authorization") String token) {
-		Optional<ViewUbicacion> ubicaciones = viewUbicacionService.findByParroquiaUbiId(idParroquia);
-		return ResponseEntity.ok(ubicaciones);
 	}
 
 	@Override

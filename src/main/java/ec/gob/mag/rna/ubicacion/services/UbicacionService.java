@@ -33,21 +33,6 @@ public class UbicacionService {
 	private MessageSource messageSource;
 
 	/**
-	 * Devuelve todas las ubicaciones
-	 *
-	 * @return List<Ubicacion>
-	 */
-	public List<Ubicacion> findAll() {
-		List<Ubicacion> ubicaciones = ubicacionRepository.findAll();
-		if (ubicaciones.isEmpty())
-			throw new UbicacionNotFoundException(String.format(
-					messageSource.getMessage("error.entity_cero_exist.message", null, LocaleContextHolder.getLocale()),
-					this.getClass().getName()));
-
-		return ubicaciones;
-	}
-
-	/**
 	 * Busca todas las Ubicaciones por ubiId
 	 * 
 	 * @param Long ubiId
@@ -55,7 +40,8 @@ public class UbicacionService {
 	 * @return List<Ubicacion>
 	 */
 	public List<Ubicacion> findChildrenByUbiId(Long ubiId) {
-		List<Ubicacion> ubicaciones = ubicacionRepository.findByUbicacion_UbiId(ubiId);
+		List<Ubicacion> ubicaciones = ubicacionRepository.findByUbicacion_UbiIdAndUbiEstadoAndUbiEliminadoEquals(ubiId,
+				11, false);
 		if (ubicaciones.isEmpty())
 			throw new UbicacionNotFoundException(String.format(
 					messageSource.getMessage("error.entity_cero_exist.message", null, LocaleContextHolder.getLocale()),
@@ -77,7 +63,8 @@ public class UbicacionService {
 	 * @return Ubicación, que cumple la condición.
 	 */
 	public Ubicacion findByUbiId(Long ubiId) {
-		Optional<Ubicacion> catalogo = ubicacionRepository.findByUbiId(ubiId);
+		Optional<Ubicacion> catalogo = ubicacionRepository.findByUbiIdAndUbiEstadoAndUbiEliminadoEquals(ubiId, 11,
+				false);
 		if (!catalogo.isPresent())
 			throw new UbicacionNotFoundException(String.format(
 					messageSource.getMessage("error.entity_not_exist.message", null, LocaleContextHolder.getLocale()),
@@ -85,32 +72,9 @@ public class UbicacionService {
 		return catalogo.get();
 	}
 
-	/**
-	 * Crea una nueva Ubicación
-	 * 
-	 * @param Ubicacion catalogo
-	 *
-	 * @return List<Ubicacion>
-	 */
-	public Ubicacion save(Ubicacion catalogo) {
-		return ubicacionRepository.save(catalogo);
-	}
-
-	/**
-	 * Elimina una ubicación de acuerdo a un ID
-	 *
-	 * @param Long cobId
-	 */
-	public void deleteById(Long cobId) {
-		ubicacionRepository.deleteById(cobId);
-	}
-
-	/**
-	 * RENAGRO
-	 */
-
 	public List<Ubicacion> findByRegiones(Long catIdUbi) {
-		List<Ubicacion> ubicaciones = ubicacionRepository.findBycatIdUbicacion(catIdUbi);
+		List<Ubicacion> ubicaciones = ubicacionRepository
+				.findByCatIdUbicacionAndUbiEstadoAndUbiEliminadoEquals(catIdUbi, 11, false);
 		if (ubicaciones.isEmpty())
 			throw new UbicacionNotFoundException(String.format(
 					messageSource.getMessage("error.entity_cero_exist.message", null, LocaleContextHolder.getLocale()),

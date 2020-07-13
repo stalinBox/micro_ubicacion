@@ -11,18 +11,14 @@ import ec.gob.mag.rna.ubicacion.domain.Ubicacion;
 @Repository("ubicacionRepository")
 public interface UbicacionRepository extends CrudRepository<Ubicacion, Long> {
 
-	List<Ubicacion> findAll();
+	List<Ubicacion> findByUbicacion_UbiIdAndUbiEstadoAndUbiEliminadoEquals(Long ubiId, Integer ubiEstado,
+			boolean ubiEliminado);
 
-	List<Ubicacion> findByUbicacion_UbiId(Long ubiId);
+	Optional<Ubicacion> findByUbiIdAndUbiEstadoAndUbiEliminadoEquals(Long ubiId, Integer ubiEstado,
+			boolean ubiEliminado);
 
-	Optional<Ubicacion> findByUbiId(Long ubiId);
-
-	@SuppressWarnings("unchecked")
-	Ubicacion save(Ubicacion agrupacion);
-
-	void deleteByUbiId(Integer ubiId);
-
-	List<Ubicacion> findBycatIdUbicacion(Long catIdUbi);
+	List<Ubicacion> findByCatIdUbicacionAndUbiEstadoAndUbiEliminadoEquals(Long catIdUbi, Integer ubiEstado,
+			boolean ubiEliminado);
 
 	@Query("SELECT ub FROM Ubicacion ub WHERE ub.ubiEstado=11 and ub.ubiEliminado=false and ub.ubiIdRegion=?1 and ub.ubicacion.ubiId=?2")
 	List<Ubicacion> findByUbiIdRegionAndUbicacion(Long ubiId, Long ubiIdPadre);

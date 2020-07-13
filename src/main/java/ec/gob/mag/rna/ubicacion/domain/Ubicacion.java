@@ -118,7 +118,7 @@ public class Ubicacion implements Serializable {
 	@JsonInclude(Include.NON_NULL)
 	@Column(name = "ubi_nivel")
 	@JsonProperty("ubiNivel")
-	private int ubiNivel;
+	private Integer ubiNivel;
 
 	@ApiModelProperty(value = " ***", position = 11)
 	@JsonInclude(Include.NON_NULL)
@@ -130,7 +130,7 @@ public class Ubicacion implements Serializable {
 	@JsonInclude(Include.NON_NULL)
 	@Column(name = "ubi_estado")
 	@JsonProperty("ubiEstado")
-	private int ubiEstado;
+	private Integer ubiEstado;
 
 	@ApiModelProperty(value = " ***", position = 13)
 	@JsonInclude(Include.NON_NULL)
@@ -143,10 +143,7 @@ public class Ubicacion implements Serializable {
 	@Column(name = "ubi_reg_usu")
 	@JsonProperty("ubiRegUsu")
 	private Long ubiRegUsu;
-	/*
-	 *
-	 * Pasar a timesatmp
-	 */
+
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@ApiModelProperty(value = " ***", position = 15)
@@ -160,7 +157,6 @@ public class Ubicacion implements Serializable {
 	@Column(name = "ubi_act_usu")
 	@JsonProperty("ubiActUsu")
 	private Long ubiActUsu;
-	// ---
 
 	@ApiModelProperty(value = " ***", position = 17)
 	@UpdateTimestamp
@@ -205,29 +201,6 @@ public class Ubicacion implements Serializable {
 	@Column(name = "ubi_latitud_max")
 	@JsonProperty("ubiLatitudMax")
 	private Float ubiLatitudMax;
-	/*
-	 * @ApiModelProperty(value = " ***", position = 24)
-	 * 
-	 * @JsonInclude(Include.NON_NULL)
-	 * 
-	 * @Column(name = "ubi_poligono_17",columnDefinition = "geometry(Polygon,3217)")
-	 * //@Type(type = "com.vividsolutions.jts.geom.Geometry")
-	 * 
-	 * @JsonProperty("ubiPoligono17")
-	 * 
-	 * private Geometry ubiPoligono17;
-	 */
-
-	/*
-	 * @ApiModelProperty(value = " ***", position = 25)
-	 * 
-	 * @JsonInclude(Include.NON_NULL)
-	 * 
-	 * @Column(name="ubi_poligono_15")
-	 * 
-	 * @JsonProperty("ubiPoligono15") private Geometry ubiPoligono15;
-	 * 
-	 */
 
 	@ApiModelProperty(value = " ***", position = 26)
 	@JsonInclude(Include.NON_NULL)
@@ -391,9 +364,6 @@ public class Ubicacion implements Serializable {
 	@JsonProperty("ubiYMin18n")
 	private Float ubiYMin18n;
 
-	/**
-	 * AGREGADO PARA CONSULTAR LAS REGIONES EN RENAGRO
-	 */
 	@ApiModelProperty(value = " ***", position = 16)
 	@JsonInclude(Include.NON_NULL)
 	@Column(name = "ubi_id_region")

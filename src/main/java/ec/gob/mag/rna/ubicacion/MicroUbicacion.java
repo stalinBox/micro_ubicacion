@@ -2,17 +2,17 @@ package ec.gob.mag.rna.ubicacion;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+//import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-//import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-//@EnableResourceServer
+@EnableResourceServer
 @EnableSwagger2
-//@SpringBootApplication
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication
+//@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class MicroUbicacion extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

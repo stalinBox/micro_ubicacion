@@ -105,11 +105,11 @@
 			<version>1.0.1</version>
 		</dependency>
 		<!--SEGURIDADES CLIENTE -->
-<!-- 	<dependency> -->
-<!-- 		<groupId>org.springframework.cloud</groupId> -->
-<!-- 		<artifactId>spring-cloud-starter-oauth2</artifactId> -->
-<!-- 		<version>2.1.4.RELEASE</version> -->
-<!-- 	</dependency> -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-oauth2</artifactId>
+			<version>2.1.4.RELEASE</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -119,7 +119,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-<!-- posterior a configuracion https -->			
+			<!-- posterior a configuracion https -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -131,8 +131,8 @@
 					</archive>
 				</configuration>
 			</plugin>
-<!-- //////////////// -->			
-			
+			<!-- //////////////// -->
+
 		</plugins>
 
 	</build>

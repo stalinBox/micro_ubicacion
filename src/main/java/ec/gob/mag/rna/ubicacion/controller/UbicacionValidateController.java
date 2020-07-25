@@ -1,6 +1,6 @@
 package ec.gob.mag.rna.ubicacion.controller;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import ec.gob.mag.rna.ubicacion.dto.Localizacion;
-import ec.gob.mag.rna.ubicacion.dto.LocalizacionCanton;
+import ec.gob.mag.rna.ubicacion.domain.UbicacionValidate;
 import ec.gob.mag.rna.ubicacion.dto.ResponseValidationProcedure;
-import ec.gob.mag.rna.ubicacion.services.ProcedureService;
+import ec.gob.mag.rna.ubicacion.services.UbicacionValitateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -30,47 +29,33 @@ import io.swagger.annotations.ApiResponses;
 @ApiResponses(value = { @ApiResponse(code = 200, message = "Objeto recuperado"),
 		@ApiResponse(code = 201, message = "Objeto creado"),
 		@ApiResponse(code = 404, message = "Recurso no encontrado") })
-public class ProceduresController implements ErrorController {
+public class UbicacionValidateController implements ErrorController {
 	private static final String PATH = "/error";
-	public static final Logger LOGGER = LoggerFactory.getLogger(ProceduresController.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(UbicacionValidateController.class);
 
 	@Autowired
-	@Qualifier("procedureService")
-	private ProcedureService procedureService;
+	@Qualifier("ubicacionValitateService")
+	private UbicacionValitateService ubicacionValitateService;
 
-	@RequestMapping(value = "/coordenada/findValidateUbication/{ubiId}/{xLong}/{yLat}", method = RequestMethod.GET)
+	@RequestMapping(value = "/coordenada/findValidateUbicationParroquia/{ubiId}/{xLong}/{yLat}", method = RequestMethod.GET)
 	@ApiOperation(value = "Busca y valida una ubicacion y coordenada para parroquias", response = ResponseValidationProcedure.class)
 	@ResponseStatus(HttpStatus.OK)
 	public ResponseValidationProcedure findValidateUbicationParroquia(@PathVariable Integer ubiId,
 			@PathVariable Double xLong, @PathVariable Double yLat,
 			@RequestHeader(name = "Authorization") String token) {
-		List<Localizacion> datosValidacion = null;
-		Boolean valido = true;
-		datosValidacion = this.procedureService.findPlaceParroquia(ubiId, xLong, yLat);
-		if (datosValidacion.size() == 0) {
-			valido = false;
-			return new ResponseValidationProcedure(valido, null, null);
-		} else {
-			return new ResponseValidationProcedure(valido, datosValidacion, null);
-		}
+		Optional<UbicacionValidate> datosValidacion = ubicacionValitateService.findParroquia_id(ubiId, xLong, yLat);
+		return new ResponseValidationProcedure(true, datosValidacion.get());
 	}
 
-	@RequestMapping(value = "/coordenada/findValidateUbicationCaton/{ubiId}/{xLong}/{yLat}", method = RequestMethod.GET)
+	@RequestMapping(value = "/coordenada/findValidateUbicationCanton/{ubiId}/{xLong}/{yLat}", method = RequestMethod.GET)
 	@ApiOperation(value = "Busca y valida una ubicacion y coordenada para Cantones", response = ResponseValidationProcedure.class)
 	@ResponseStatus(HttpStatus.OK)
-	public ResponseValidationProcedure findValidateUbicationCanton(@PathVariable String ubiId,
+	public ResponseValidationProcedure findValidateUbicationCanton(@PathVariable Integer ubiId,
 			@PathVariable String xLong, @PathVariable String yLat,
 			@RequestHeader(name = "Authorization") String token) {
-		List<LocalizacionCanton> datosValidacion = null;
-		Boolean valido = true;
-		datosValidacion = this.procedureService.findPlaceCanton(Integer.parseInt(ubiId), Double.parseDouble(xLong),
-				Double.parseDouble(yLat));
-		if (datosValidacion.size() == 0) {
-			valido = false;
-			return new ResponseValidationProcedure(valido, null, null);
-		} else {
-			return new ResponseValidationProcedure(valido, null, datosValidacion);
-		}
+		Optional<UbicacionValidate> datosValidacion = ubicacionValitateService.findCanton_id(ubiId,
+				Double.parseDouble(xLong), Double.parseDouble(yLat));
+		return new ResponseValidationProcedure(true, datosValidacion.get());
 	}
 
 	@Override

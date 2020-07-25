@@ -1,7 +1,9 @@
 package ec.gob.mag.rna.ubicacion.dto;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import ec.gob.mag.rna.ubicacion.domain.UbicacionValidate;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,9 +14,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ResponseValidationProcedure {
 	@ApiModelProperty(notes = "Resultado de la validación", position = 2)
+	@JsonInclude(Include.NON_NULL)
 	private Boolean validation;
+
 	@ApiModelProperty(notes = "Objeto con los datos validados", position = 3)
-	private List<Localizacion> datosValidados;
-	@ApiModelProperty(notes = "Objeto con los datos validados", position = 3)
-	private List<LocalizacionCanton> datosValidadosCanton;
+	@JsonInclude(Include.NON_NULL)
+	private UbicacionValidate datosValidados;
 }

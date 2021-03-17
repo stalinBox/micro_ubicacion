@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.gob.mag.rna.ubicacion.domain.UbicacionValidate;
 import ec.gob.mag.rna.ubicacion.dto.ResponseValidationProcedure;
 import ec.gob.mag.rna.ubicacion.services.UbicacionValitateService;
+import ec.gob.mag.rna.ubicacion.util.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -36,6 +37,10 @@ public class UbicacionValidateController implements ErrorController {
 	@Autowired
 	@Qualifier("ubicacionValitateService")
 	private UbicacionValitateService ubicacionValitateService;
+	
+	@Autowired
+	@Qualifier("util")
+	private Util util;
 
 	@RequestMapping(value = "/coordenada/findValidateUbicationParroquia/{ubiId}/{xLong}/{yLat}", method = RequestMethod.GET)
 	@ApiOperation(value = "Busca y valida una ubicacion y coordenada para parroquias", response = ResponseValidationProcedure.class)
@@ -44,6 +49,7 @@ public class UbicacionValidateController implements ErrorController {
 			@PathVariable Double xLong, @PathVariable Double yLat,
 			@RequestHeader(name = "Authorization") String token) {
 		Optional<UbicacionValidate> datosValidacion = ubicacionValitateService.findParroquia_id(ubiId, xLong, yLat);
+		LOGGER.info("procedure/coordenada/findValidateUbicationParroquia : " + datosValidacion.toString()+ " usuario: " + util.filterUsuId(token));
 		return new ResponseValidationProcedure(true, datosValidacion.get());
 	}
 
@@ -55,6 +61,7 @@ public class UbicacionValidateController implements ErrorController {
 			@RequestHeader(name = "Authorization") String token) {
 		Optional<UbicacionValidate> datosValidacion = ubicacionValitateService.findCanton_id(ubiId,
 				Double.parseDouble(xLong), Double.parseDouble(yLat));
+		LOGGER.info("procedure/coordenada/findValidateUbicationCanton : " + datosValidacion.toString()+ " usuario: " + util.filterUsuId(token));
 		return new ResponseValidationProcedure(true, datosValidacion.get());
 	}
 

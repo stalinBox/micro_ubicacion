@@ -19,6 +19,7 @@ import ec.gob.mag.rna.ubicacion.domain.ViewUbicacion;
 import ec.gob.mag.rna.ubicacion.dto.ResponseProvincias;
 import ec.gob.mag.rna.ubicacion.services.UbicacionService;
 import ec.gob.mag.rna.ubicacion.services.ViewUbicacionService;
+import ec.gob.mag.rna.ubicacion.util.Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponses;
@@ -43,12 +44,17 @@ public class MicroUbicacionController implements ErrorController {
 	@Autowired
 	@Qualifier("viewUbicacionService")
 	private ViewUbicacionService viewUbicacionService;
+	
+	@Autowired
+	@Qualifier("util")
+	private Util util;
 
 	@RequestMapping(value = "/ubicacion/findByUbiId/{id}", method = RequestMethod.GET)
 	@ApiOperation(value = "Obtiene los datos de la ubicacion y de todos sus ubicaciones padre por id", response = Ubicacion.class)
 	@ResponseStatus(HttpStatus.OK)
 	public Ubicacion getUbicacion(@PathVariable Long id, @RequestHeader(name = "Authorization") String token) {
 		Ubicacion ubicaciones = ubicacionService.findByUbiId(id);
+		LOGGER.info("/ubicacion/findByUbiId : " + ubicaciones.toString()+ " usuario: " + util.filterUsuId(token));
 		return ubicaciones;
 	}
 
@@ -59,6 +65,7 @@ public class MicroUbicacionController implements ErrorController {
 			@RequestHeader(name = "Authorization") String token) {
 		Ubicacion ubicaciones = ubicacionService.findByUbiId(id);
 		ubicaciones.setUbicacion(null);
+		LOGGER.info("/ubicacion/findOnlyFirstLevelByUbiId : " + ubicaciones.toString()+ " usuario: " + util.filterUsuId(token));
 		return ubicaciones;
 	}
 
@@ -68,6 +75,7 @@ public class MicroUbicacionController implements ErrorController {
 	public List<Ubicacion> findChildrenByUbiId(@PathVariable Long ubiId,
 			@RequestHeader(name = "Authorization") String token) {
 		List<Ubicacion> ubicaciones = ubicacionService.findChildrenByUbiId(ubiId);
+		LOGGER.info("/ubicacion/findChildrenByUbiId : " + ubicaciones.toString()+ " usuario: " + util.filterUsuId(token));
 		return ubicaciones;
 	}
 
@@ -77,6 +85,7 @@ public class MicroUbicacionController implements ErrorController {
 	public List<Ubicacion> findByRegiones(@PathVariable Long catIdUbi,
 			@RequestHeader(name = "Authorization") String token) {
 		List<Ubicacion> ubicaciones = ubicacionService.findByRegiones(catIdUbi);
+		LOGGER.info("/ubicacion/findByRegiones : " + ubicaciones.toString()+ " usuario: " + util.filterUsuId(token));
 		return ubicaciones;
 	}
 
@@ -86,7 +95,7 @@ public class MicroUbicacionController implements ErrorController {
 	public List<ResponseProvincias> findByProvinciasByRegiones(@PathVariable Long ubiIdRegion,
 			@PathVariable Long ubiIdPadre, @RequestHeader(name = "Authorization") String token) throws IOException {
 		List<ResponseProvincias> ubicaciones = ubicacionService.findByProvinciasByRegiones(ubiIdRegion, ubiIdPadre);
-
+		LOGGER.info("/ubicacion/findByProvinciasByRegiones : " + ubicaciones.toString()+ " usuario: " + util.filterUsuId(token));
 		return ubicaciones;
 	}
 
@@ -95,6 +104,7 @@ public class MicroUbicacionController implements ErrorController {
 	public List<ViewUbicacion> findByAllUbicacionesEcuador(@RequestHeader(name = "Authorization") String token) {
 		List<ViewUbicacion> ubicaciones = null;
 		ubicaciones = viewUbicacionService.findAll();
+		LOGGER.info("/ubicacion/findAllUbicacionesEcuador : " + ubicaciones.toString()+ " usuario: " + util.filterUsuId(token));
 		return ubicaciones;
 	}
 

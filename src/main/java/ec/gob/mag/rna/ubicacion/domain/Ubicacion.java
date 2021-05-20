@@ -87,15 +87,6 @@ public class Ubicacion implements Serializable {
 	@JsonProperty("catIdZona")
 	private Long catIdZona;
 
-	@ApiModelProperty(value = " ***", position = 6)
-	@JsonInclude(Include.NON_NULL)
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@NotFound(action = NotFoundAction.IGNORE)
-	@JoinColumn(name = "ubi_id_padre", insertable = false, updatable = false)
-	@JsonProperty("ubicacion")
-	private Ubicacion ubicacion;
-
 	@ApiModelProperty(value = " ***", position = 7)
 	@JsonInclude(Include.NON_NULL)
 	@Column(name = "ubi_cod_inec")
@@ -369,6 +360,14 @@ public class Ubicacion implements Serializable {
 	@Column(name = "ubi_id_region")
 	@JsonProperty("ubiIdRegion")
 	private Long ubiIdRegion;
+
+	@ApiModelProperty(value = " ***", position = 6)
+	@JsonInclude(Include.NON_NULL)
+	@OneToOne(fetch = FetchType.LAZY)
+	@NotFound(action = NotFoundAction.IGNORE)
+	@JoinColumn(name = "ubi_id_padre", insertable = false, updatable = false)
+	@JsonProperty("ubicacion")
+	private Ubicacion ubicacion;
 
 	@PrePersist
 	public void prePersist() {

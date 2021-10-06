@@ -56,4 +56,19 @@ public class UbicacionValitateService {
 
 		return ubicaciones;
 	}
+	
+	
+	
+	public Optional<UbicacionValidate> findParroquia_id_Utm(Integer ubiId, Double ubiX, Double ubiY) {
+		Optional<UbicacionValidate> ubicaciones = ubicacionValidateRepository.findParroquia_id_Utm(ubiId, ubiX, ubiY);
+		if (!ubicaciones.isPresent())
+			throw new UbicacionNotFoundException(String.format(
+					messageSource.getMessage("error.entity_cero_exist.message", null, LocaleContextHolder.getLocale()),
+					this.getClass().getName()));
+
+		return ubicaciones;
+	}
+	
+	
+	
 }

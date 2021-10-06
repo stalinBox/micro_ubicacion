@@ -37,4 +37,22 @@ public interface UbicacionValidateRepository extends CrudRepository<UbicacionVal
 			+ ") consulta;", nativeQuery = true)
 	Optional<UbicacionValidate> findParroquia_id(@Param("ubiId") Integer ubiId, @Param("xLong") Double xLong,
 			@Param("yLat") Double yLat);
+	
+	
+	@Query(value = "SELECT out_parroquia_id parroquia_id,"
+			+ "out_parroquia_codigo_inec parroquia_codigo_inec,out_parroquia_nombre parroquia_nombre,"
+			+ "out_canton_id canton_id, out_canton_codigo_inec canton_codigo_inec,"
+			+ "out_canton_nombre canton_nombre, out_provincia_id provincia_id, "
+			+ "out_provincia_codigo_inec provincia_codigo_inec,out_provincia_nombre provincia_nombre,"
+			+ "out_x_origen x_origen, out_y_origen y_origen, out_srid_origen srid_origen,"
+			+ "out_x_destino x_destino, out_y_destino y_destino, out_srid_destino srid_destino,"
+			+ "out_hemisferio hemisferio, out_zona zona, out_validacion validacion FROM ("
+			+ "SELECT * FROM sc_geografico.sp_valida_punto_geografico_parroquia_utm(:ubiId,:ubiX,:ubiY)"
+			+ ") consulta;", nativeQuery = true)
+	Optional<UbicacionValidate> findParroquia_id_Utm(@Param("ubiId") Integer ubiId, @Param("ubiX") Double ubiX,
+			@Param("ubiY") Double ubiY);
+	
+	
+	
+	
 }

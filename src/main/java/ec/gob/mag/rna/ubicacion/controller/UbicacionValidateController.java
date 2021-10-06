@@ -64,6 +64,20 @@ public class UbicacionValidateController implements ErrorController {
 		LOGGER.info("procedure/coordenada/findValidateUbicationCanton : " + datosValidacion.toString()+ " usuario: " + util.filterUsuId(token));
 		return new ResponseValidationProcedure(true, datosValidacion.get());
 	}
+	
+	
+	@RequestMapping(value = "/coordenada/findValidateUbicationParroquiaUtm/{ubiId}/{ubiX}/{ubiY}", method = RequestMethod.GET)
+	@ApiOperation(value = "Busca y valida una ubicacion y coordenada para parroquias a traves de coordenadas utm ", response = ResponseValidationProcedure.class)
+	@ResponseStatus(HttpStatus.OK)
+	public ResponseValidationProcedure findValidateUbicationParroquiaUtm(@PathVariable Integer ubiId,
+			@PathVariable Double ubiX, @PathVariable Double ubiY,
+			@RequestHeader(name = "Authorization") String token) {
+		Optional<UbicacionValidate> datosValidacion = ubicacionValitateService.findParroquia_id_Utm(ubiId, ubiX, ubiY);
+		LOGGER.info("procedure/coordenada/findValidateUbicationParroquiaUtm : " + datosValidacion.toString()+ " usuario: " + util.filterUsuId(token));
+		return new ResponseValidationProcedure(true, datosValidacion.get());
+	}
+	
+	
 
 	@Override
 	public String getErrorPath() {
